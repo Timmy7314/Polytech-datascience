@@ -35,5 +35,14 @@ p
 
 
 ```{r}
+all_wine$type<-NULL
+
+arr = c()
+for (i in 2:15) {
+  res <- kmeans(all_wine,i)
+  arr<-c(arr,res$tot.withinss/res$totss)
+}
+
+plot(arr)
 ```
 
