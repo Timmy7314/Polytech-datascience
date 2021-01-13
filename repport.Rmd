@@ -9,3 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# 1 Objectif de l'étude
+
+Notre étude va porter sur la qualité des vins portugais, de la région Vinho Verde. Nos objectifs via cette étude sont : 
+* Déterminer un modèle de prédiction de la qualité d'un vin rouge et d'un vin blanc. Ainsi, connaitre le critère physionomique le plus important dans la détermination de la qualité pour chaque type de vin.
+* Comparer les deux modèles (blanc et rouge) pour savoir si ce qui vait un bon vin blanc, fait un bon vin rouge
