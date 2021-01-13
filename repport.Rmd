@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # 1 Objectif de l'étude
@@ -39,8 +39,22 @@ Les onze critères physionomiques sont les suivantes :
 
 La variable de sortie correspond à la médianne des notes données par des experts (au minimun trois notes). Si la variable vaut 0 sela signifie que le vin est de très mauvaise qualité. Si la variable vaut 10 alors le vin est de bonne qualité.
 
+Nous avons 1599 vins rouges et 4898 vins blancs.
 
 ```{r}
 RWine <- read.csv("./data/winequality-red.csv", sep = ";"); 
 WWine <- read.csv("./data/winequality-white.csv", sep = ";");
+```
+
+Afin de connaître les liens entre les variables d'entrée, nous allons prendre l'ensemble des 11 variables d'entrée ainsi que les 50 premiers vins. Nous avons fait le choix de cet échantillon, car si nous faisons le plot de chaque jeu de données complet, le résultat sera illisible.
+
+```{r}
+# 50 rows and 11 columns
+RWineR50C11 <- RWine[1:50, 1:11]
+plot(RWineR50C11, main = "Plot of 50st Red Wines")
+```
+
+```{r}
+WWineR50C11 <- WWine[1:50, 1:11]
+plot(WWineR50C11, main = "Plot of 50st White Wines")
 ```
