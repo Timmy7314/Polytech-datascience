@@ -7,7 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+library("ggplot2")
+library("reshape2")
 
 ```
 
@@ -15,5 +16,24 @@ knitr::opts_chunk$set(echo = TRUE)
 # Get Data
 red_wine<-read.csv("data/winequality-red.csv", fill = TRUE, sep=";")
 white_wine<-read.csv("data/winequality-white.csv", fill = TRUE, sep=";")
+```
+
+```{r}
+white_wine['type']='White'
+red_wine['type']='Red'
+all_wine<-rbind(red_wine, white_wine)
+all_wine.m <- melt(all_wine, id.var = "type")
+
+p <- ggplot(data = all_wine.m, aes(x=variable, y=value)) 
+p <- p + geom_boxplot(aes(fill=type))
+p <- p + facet_wrap( ~ variable, scales="free")
+p <- p + xlab("") + ylab("") + ggtitle("Composition des vins en fonction du Type")
+p <- p + guides(fill=guide_legend(title="Type de vin"))
+p 
+
+```
+
+
+```{r}
 ```
 
