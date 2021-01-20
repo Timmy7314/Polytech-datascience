@@ -50,7 +50,9 @@ RWine <- read.csv("./data/winequality-red.csv", sep = ";");
 WWine <- read.csv("./data/winequality-white.csv", sep = ";");
 ```
 
-Afin de connaître les liens entre les variables d'entrée, nous avons décidé de calculer la corrélation entre les différentes variables. Ce calcul nous a données les résultats suivants :
+Nous pouvons déjà annoncer un lien entre deux variables : $SO_2$ libre et $SO_2$ total. Ce lien est le suivant : plus la teneur en $SO_2$ libre augmente et la teneur totale en $SO_2$ augmente.
+
+Afin de connaître d'autres liens entre les variables d'entrée, nous avons décidé de calculer la corrélation entre les différentes variables. Ce calcul nous a données les résultats suivants :
 
 ```{r}
 WWine['type']='White'
@@ -68,10 +70,14 @@ ggcorr(AWine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
 Nous pouvons observer dans les résultats ci-desssus, qu'il y a des corrélations positives et négatives. Par exemple, la densité et l'alcool ont une corrélation négative : cela signifie que plus il y a d'alcool moins le vin est dense. À l'inverse, le $SO_2$ libre et le $SO_2$ total ont une corrélation positive. Ce qui signifie que plus il y a de $SO_2$ libre plus la teneur totale de $SO_2$ sera importante.
 
 Nous avons choisis de faire le calcul des corrélations afin d'avoir une vision d'ensemble des liens entre les variables. Ainsi nous pouvons faire un plot plus lisible des données pour mieux apprécier les liens.
+Ainsi nous avons pu établir le diagramme suivant :
 
 ```{r}
-
+plot(AWine[1:100,c(1,2,3,6,7,8,9)])
 ```
+
+Sur le diagramme ci-dessus, nous pouvons voir qu'il existe un lien entre le pH du vin et son acidité fixe. Ce lien s'explique par le fait que la mesure du pH permet de mesurer l'acidité ou la basicité d'une solution. 
+Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volatide, et entre le pH et la teneur en acide citrique. 
 
 ```{r}
 AWine$type<-NULL
