@@ -67,7 +67,11 @@ ggcorr(AWine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
 
 Nous pouvons observer dans les résultats ci-desssus, qu'il y a des corrélations positives et négatives. Par exemple, la densité et l'alcool ont une corrélation négative : cela signifie que plus il y a d'alcool moins le vin est dense. À l'inverse, le $SO_2$ libre et le $SO_2$ total ont une corrélation positive. Ce qui signifie que plus il y a de $SO_2$ libre plus la teneur totale de $SO_2$ sera importante.
 
-Nous avons choisis de faire le calcul des corrélations afin d'avoir une vision d'ensemble des liens entre les variables.
+Nous avons choisis de faire le calcul des corrélations afin d'avoir une vision d'ensemble des liens entre les variables. Ainsi nous pouvons faire un plot plus lisible des données pour mieux apprécier les liens.
+
+```{r}
+
+```
 
 ```{r}
 AWine$type<-NULL
