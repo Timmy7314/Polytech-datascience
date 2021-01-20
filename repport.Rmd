@@ -35,17 +35,30 @@ p
 ```
 
 ```{r}
-ggcorr(all_wine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
+all_wine5050 <- rbind(white_wine[sample(nrow(white_wine), 1000), ], red_wine[sample(nrow(red_wine), 1000), ])
+ggcorr(all_wine5050[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
+  geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
+  scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
+  guides(color = FALSE, alpha = FALSE)
+
+
+ggcorr(red_wine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
+  geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
+  scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
+  guides(color = FALSE, alpha = FALSE)
+
+
+ggcorr(white_wine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
   geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
   scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
   guides(color = FALSE, alpha = FALSE)
 ```
 
 ```{r}
-WineR50C11 <- all_wine[1:100, c(4, 7, 8, 11)]
+WineR50C11 <- all_wine[1:50, c(4, 7, 8, 11)]
 plot(WineR50C11, main = "Plot of 50st White Wines")
 
-WineR50C11 <- all_wine[1:100, c(1, 2, 3, 6, 7, 8)]
+WineR50C11 <- all_wine[1:50, c(1, 2, 3, 6, 7, 8)]
 plot(WineR50C11, main = "Plot of 50st White Wines")
 
 ```
@@ -55,11 +68,13 @@ plot(WineR50C11, main = "Plot of 50st White Wines")
 all_wine$type<-NULL
 
 arr = c()
-for (i in 2:15) {
+for (i in 1:15) {
   res <- kmeans(all_wine,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
 
 plot(arr)
+
+kmeans(all_wine, 3)
 ```
 
