@@ -55,11 +55,24 @@ ggcorr(white_wine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
 ```
 
 ```{r}
-WineR50C11 <- all_wine[1:50, c(4, 7, 8, 11)]
-plot(WineR50C11, main = "Plot of 50st White Wines")
 
-WineR50C11 <- all_wine[1:50, c(1, 2, 3, 6, 7, 8)]
-plot(WineR50C11, main = "Plot of 50st White Wines")
+allWineSelection <- all_wine5050[sample(nrow(all_wine5050), 50), 1:11]
+plot(allWineSelection, main = "Plot of Wines")
+
+allWineSelection1 <- all_wine5050[sample(nrow(all_wine5050), 50), c(4, 6, 7, 8, 11)]
+plot(allWineSelection1, main = "Plot of Wines")
+
+redWineSelection <- all_wine5050[1:50, 1:11]
+plot(redWineSelection, main = "Plot of Red Wines")
+
+redWineSelection1 <- red_wine[1:50, c(2, 3, 6, 7, 9)]
+plot(redWineSelection1, main = "Plot of Red Wines")
+
+whiteWineSelection <- white_wine[1:50, 1:11]
+plot(whiteWineSelection, main = "Plot of White Wines")
+
+whiteWineSelection1 <- white_wine[1:50, c(4 ,6, 7, 8, 11)]
+plot(whiteWineSelection1, main = "Plot of White Wines")
 
 ```
 
