@@ -41,6 +41,15 @@ ggcorr(all_wine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
   guides(color = FALSE, alpha = FALSE)
 ```
 
+```{r}
+WineR50C11 <- all_wine[1:100, c(4, 7, 8, 11)]
+plot(WineR50C11, main = "Plot of 50st White Wines")
+
+WineR50C11 <- all_wine[1:100, c(1, 2, 3, 6, 7, 8)]
+plot(WineR50C11, main = "Plot of 50st White Wines")
+
+```
+
 
 ```{r}
 all_wine$type<-NULL
