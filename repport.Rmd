@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library("ggplot2")
 library("reshape2")
 library("GGally")
+library("fpc")
 
 ```
 
@@ -78,16 +79,20 @@ plot(whiteWineSelection1, main = "Plot of White Wines")
 
 
 ```{r}
-all_wine$type<-NULL
+all_wine5050$type<-NULL
 
 arr = c()
 for (i in 1:15) {
-  res <- kmeans(all_wine,i)
+  res <- kmeans(all_wine5050,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
 
 plot(arr)
+white_wine
+white_wine$type<-NULL
 
-kmeans(all_wine, 3)
+whiteWineClus <- kmeans(white_wine, 4)
+plotcluster(white_wine, whiteWineClus$cluster)
+with(white_wine, pairs(white_wine, col=c(1:3)[whiteWineClus$cluster])) 
 ```
 
