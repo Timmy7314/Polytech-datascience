@@ -6,52 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library("ggplot2")
-library("reshape2")
-library("GGally")
-
-```
-
-```{r}
-# Get Data
-red_wine<-read.csv("data/winequality-red.csv", fill = TRUE, sep=";")
-white_wine<-read.csv("data/winequality-white.csv", fill = TRUE, sep=";")
-```
-
-```{r}
-white_wine['type']='White'
-red_wine['type']='Red'
-all_wine<-rbind(red_wine, white_wine)
-all_wine.m <- melt(all_wine, id.var = "type")
-
-p <- ggplot(data = all_wine.m, aes(x=variable, y=value)) 
-p <- p + geom_boxplot(aes(fill=type))
-p <- p + facet_wrap( ~ variable, scales="free")
-p <- p + xlab("") + ylab("") + ggtitle("Composition des vins en fonction du Type")
-p <- p + guides(fill=guide_legend(title="Type de vin"))
-p 
-
-```
-
-```{r}
-ggcorr(all_wine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
-  geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
-  scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
-  guides(color = FALSE, alpha = FALSE)
-```
-
-
-```{r}
-all_wine$type<-NULL
-
-arr = c()
-for (i in 2:15) {
-  res <- kmeans(all_wine,i)
-  arr<-c(arr,res$tot.withinss/res$totss)
-}
-
-plot(arr)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # 1 Objectif de l'étude
