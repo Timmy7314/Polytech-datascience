@@ -45,27 +45,52 @@ La variable de sortie correspond à la médianne des notes données par des expe
 
 Nous avons 1599 vins rouges et 4898 vins blancs.
 
-```{r}
-RWine <- read.csv("./data/winequality-red.csv", sep = ";"); 
-WWine <- read.csv("./data/winequality-white.csv", sep = ";");
-```
+Nous allons maintenant décrire les liens entre les différentes variables.
 
 Nous pouvons déjà annoncer un lien entre deux variables : $SO_2$ libre et $SO_2$ total. Ce lien est le suivant : plus la teneur en $SO_2$ libre augmente et la teneur totale en $SO_2$ augmente.
 
-Afin de connaître d'autres liens entre les variables d'entrée, nous avons décidé de calculer la corrélation entre les différentes variables. Ce calcul nous a données les résultats suivants :
+Afin de connaître d'autres liens entre les variables d'entrée, nous avons décidé de calculer la corrélation entre les différentes variables sur trois jeux de données différents.
+Le premier calcul de corrélation a été fait sur un ensemble de données composé de 50% de vins rouges et 50% de vins blancs. Nous avons créer cette ensemble de données afin de voir de façon globale les liens entre les différentes variables. Voici les résultats de ce premier calcul : 
 
 ```{r}
+RWine <- read.csv("./data/winequality-red.csv", sep = ";"); 
+WWine <- read.csv("./data/winequality-white.csv", sep = ";");
+
 WWine['type']='White'
 RWine['type']='Red'
 AWine<-rbind(RWine, WWine)
-AWine.m <- melt(AWine, id.var = "type")
+AWine5050 <- rbind(WWine[sample(nrow(WWine), 1000), ], RWine[sample(nrow(RWine), 1000), ])
+ggcorr(AWine5050[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
+  geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
+  scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
+  guides(color = FALSE, alpha = FALSE)
 
-ggcorr(AWine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
+```
+
+Nous pouvons voir que le lien de précédement annoncé : le lien entre le $SO_2$ libre et le $SO_2$ total. Mais nous constatons également que, dans l'ensemble, il la variable de densité et d'alcool sont liées. Les variables de sucre résiduel et $SO_2$ libre sont également liées. 
+
+Ensuite nous avons réalisé le calcul de corrélation uniquement sur les vins rouges, afin de voir s'il y a des liens entre les variables qui seraient spécifiques aux vins rouges.
+
+```{r}
+ggcorr(RWine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
+  geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
+  scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
+  guides(color = FALSE, alpha = FALSE)
+
+```
+
+Dans le cas du vin rouge, nous pouvons voir qu'il y a un lien entre le la teneur d'acide citrique et le pH du vin. Nous constatons également que l'acidité volatile et l'acide citrique sont liées.
+
+Le troisième et dernier calcul de corrélation s'est effectué sur les vins blancs. Comme pour le précédent calcul, nous avons réalisé se calcul afin de connaître l'existence de liens entre les variables qui seraient spécifiques aux vins blancs.
+
+```{r}
+ggcorr(WWine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
   geom_point(size = 10, aes(color = coefficient > 0, alpha = abs(coefficient) > 0.5)) +
   scale_alpha_manual(values = c("TRUE" = 0.25, "FALSE" = 0)) +
   guides(color = FALSE, alpha = FALSE)
 ```
 
+Nous pouvons voir avec ces résultats, nous pouvons voir que la variable de la densité du vin est liée aux variables de sucre résiduel et de $SO_2$ total. 
 
 Nous pouvons observer dans les résultats ci-desssus, qu'il y a des corrélations positives et négatives. Par exemple, la densité et l'alcool ont une corrélation négative : cela signifie que plus il y a d'alcool moins le vin est dense. À l'inverse, le $SO_2$ libre et le $SO_2$ total ont une corrélation positive. Ce qui signifie que plus il y a de $SO_2$ libre plus la teneur totale de $SO_2$ sera importante.
 
@@ -83,10 +108,12 @@ Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volat
 AWine$type<-NULL
 
 arr = c()
-for (i in 2:15) {
-  res <- kmeans(AWine,i)
+for (i in 1:15) {
+  res <- kmeans(all_wine,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
 
 plot(arr)
+
+kmeans(all_wine, 3)
 ```
