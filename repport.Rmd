@@ -11,6 +11,7 @@ library("ggplot2")
 library("reshape2")
 library("GGally")
 library("fpc")
+library("cluster")
 
 ```
 
@@ -88,11 +89,20 @@ for (i in 1:15) {
 }
 
 plot(arr)
-white_wine
 white_wine$type<-NULL
 
 whiteWineClus <- kmeans(white_wine, 4)
 plotcluster(white_wine, whiteWineClus$cluster)
 with(white_wine, pairs(white_wine, col=c(1:3)[whiteWineClus$cluster])) 
+
+whiteWineClus <- pam(white_wine, 4)
+plotcluster(white_wine, whiteWineClus$cluster)
+with(white_wine, pairs(white_wine, col=c(1:3)[whiteWineClus$cluster])) 
+
+D<-dist(white_wine)
+resuhist<-hclust(D,method="ward")
+plot(resuhist)
+plot(resuhist, hang = -1)
+
 ```
 
