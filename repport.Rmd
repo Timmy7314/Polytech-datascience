@@ -10,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library("ggplot2")
 library("reshape2")
 library("GGally")
+library("cluster")
+library("fpc")
 
 ```
 
@@ -104,16 +106,80 @@ plot(AWine[1:100,c(1,2,3,6,7,8,9)])
 Sur le diagramme ci-dessus, nous pouvons voir qu'il existe un lien entre le pH du vin et son acidité fixe. Ce lien s'explique par le fait que la mesure du pH permet de mesurer l'acidité ou la basicité d'une solution. 
 Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volatide, et entre le pH et la teneur en acide citrique. 
 
+# 3 Classification Non Supervisée
+
+On cherche à determiner le nombre optimal de cluster pour notre jeu de données. Pour cela, on applique la fonction coude avec 50% de vin blanc et 50% de vin rouge. On constate donc que le découpage 3 classes semble le plus pertinent. En appliquant la même méthode séparément aux vins rouges et aux vins blancs, on obtient le ême nombre de classe recommandé.
 ```{r}
-AWine$type<-NULL
+AWine5050$type<-NULL
+RWine$type<-NULL
+WWine$type<-NULL
 
 arr = c()
-for (i in 1:15) {
-  res <- kmeans(all_wine,i)
+for (i in 1:10) {
+  res <- kmeans(AWine5050,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
-
 plot(arr)
 
-kmeans(all_wine, 3)
+arr = c()
+for (i in 1:10) {
+  res <- kmeans(RWine,i)
+  arr<-c(arr,res$tot.withinss/res$totss)
+}
+plot(arr)
+
+arr = c()
+for (i in 1:10) {
+  res <- kmeans(WWine,i)
+  arr<-c(arr,res$tot.withinss/res$totss)
+}
+plot(arr)
+```
+```{r}
+
+AWine5050Clus <- kmeans(AWine5050, 3)
+plotcluster(AWine5050, AWine5050Clus$cluster)
+
+RWineClus <- kmeans(RWine, 3)
+plotcluster(RWine, RWineClus$cluster)
+
+WWineClus <- kmeans(WWine, 3)
+plotcluster(WWine, WWineClus$cluster)
+
+```
+
+
+```{r}
+AWine5050Sample<-AWine5050[sample(nrow(AWine5050), 200), ]
+AWine5050Clus <- pam(AWine5050Sample, 3)
+plotcluster(AWine5050Sample, AWine5050Clus$cluster)
+sil<-silhouette(AWine5050Clus)
+plot(sil)
+
+RWineSample<-RWine[sample(nrow(RWine), 200), ]
+RWineClus <- pam(RWineSample, 3)
+plotcluster(RWineSample, RWineClus$cluster)
+sil<-silhouette(RWineClus)
+plot(sil)
+
+WWineSample<-WWine[sample(nrow(WWine), 200), ]
+WWineClus <- pam(WWineSample, 3)
+plotcluster(WWineSample, WWineClus$cluster)
+sil<-silhouette(WWineClus)
+plot(sil)
+
+```
+
+```{r}
+DA<-dist(WWine)
+resuhist<-hclust(DA,method="ward.D")
+plot(resuhist, hang = -1)
+
+DR<-dist(RWine)
+resuhist<-hclust(DR,method="ward.D")
+plot(resuhist, hang = -1)
+
+DW<-dist(AWine5050)
+resuhist<-hclust(DW,method="ward.D")
+plot(resuhist, hang = -1)
 ```
