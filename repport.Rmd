@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library("ggplot2")
 library("reshape2")
 library("GGally")
+library("rpart")
 
 ```
 
@@ -116,4 +117,54 @@ for (i in 1:15) {
 plot(arr)
 
 kmeans(all_wine, 3)
+```
+
+
+## 4 Classification supervisée
+
+Tous les vins
+```{r}
+SAWine5050<-c(
+  sample(
+    1:max(which(AWine5050$quality<5)), round(0.8 * max(which(AWine5050$quality<5)), digits=0)
+  ),
+  sample(
+    max(which(AWine5050$quality<5))+1:dim(AWine5050)[1], round(0.8*length(which(AWine5050$quality>=5)), digits = 0)
+  )
+)
+fit<-rpart(AWine5050$quality~ ., data = AWine5050, subset = SAWine5050)
+plot(fit)
+text(fit)
+
+```
+
+Vins rouges
+```{r}
+SRWine<-c(
+  sample(
+    1:max(which(RWine$quality<5)), round(0.8 * max(which(RWine$quality<5)), digits=0)
+  ),
+  sample(
+    max(which(RWine$quality<5))+1:dim(RWine)[1], round(0.8*length(which(RWine$quality>=5)), digits = 0)
+  )
+)
+fit<-rpart(RWine$quality~ ., data = RWine, subset = SRWine)
+plot(fit)
+text(fit)
+
+```
+
+Vins blancs
+```{r}
+SWWine<-c(
+  sample(
+    1:max(which(WWine$quality<5)),round(0.8 * max(which(WWine$quality<5)), digits=0)
+  ),
+  sample(
+    max(which(WWine$quality<5))+1:dim(WWine)[1], round(0.8*length(which(WWine$quality>=5)), digits = 0)
+  )
+)
+fit<-rpart(WWine$quality~ ., data = WWine, subset = SWWine)
+plot(fit)
+text(fit)
 ```
