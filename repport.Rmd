@@ -57,8 +57,6 @@ Le premier calcul de corrélation a été fait sur un ensemble de données compo
 RWine <- read.csv("./data/winequality-red.csv", sep = ";"); 
 WWine <- read.csv("./data/winequality-white.csv", sep = ";");
 
-WWine['type']='White'
-RWine['type']='Red'
 AWine<-rbind(RWine, WWine)
 AWine5050 <- rbind(WWine[sample(nrow(WWine), 1000), ], RWine[sample(nrow(RWine), 1000), ])
 ggcorr(AWine5050[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
@@ -106,17 +104,16 @@ Sur le diagramme ci-dessus, nous pouvons voir qu'il existe un lien entre le pH d
 Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volatide, et entre le pH et la teneur en acide citrique. 
 
 ```{r}
-AWine$type<-NULL
 
 arr = c()
 for (i in 1:15) {
-  res <- kmeans(all_wine,i)
+  res <- kmeans(AWine,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
 
 plot(arr)
 
-kmeans(all_wine, 3)
+kmeans(AWine, 3)
 ```
 
 
@@ -135,6 +132,8 @@ SAWine5050<-c(
 fit<-rpart(AWine5050$quality~ ., data = AWine5050, subset = SAWine5050)
 plot(fit)
 text(fit)
+fit
+table(predict(fit, AWine5050[-SAWine5050,], type="vector"), AWine5050[-SAWine5050, "quality"])
 
 ```
 
@@ -151,7 +150,8 @@ SRWine<-c(
 fit<-rpart(RWine$quality~ ., data = RWine, subset = SRWine)
 plot(fit)
 text(fit)
-
+fit
+table(predict(fit, RWine[-SRWine,], type="vector"), RWine[-SRWine, "quality"])
 ```
 
 Vins blancs
@@ -165,6 +165,9 @@ SWWine<-c(
   )
 )
 fit<-rpart(WWine$quality~ ., data = WWine, subset = SWWine)
+printcp(fit)
 plot(fit)
 text(fit)
+fit
+table(predict(fit, WWine[-SWWine,], type="vector"), WWine[-SWWine, "quality"])
 ```
