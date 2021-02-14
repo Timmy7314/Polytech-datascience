@@ -11,7 +11,8 @@ library("ggplot2")
 library("reshape2")
 library("GGally")
 library("rpart")
-
+library("randomForest")
+library("plotly")
 ```
 
 # 1 Objectif de l'étude
@@ -156,18 +157,59 @@ table(predict(fit, RWine[-SRWine,], type="vector"), RWine[-SRWine, "quality"])
 
 Vins blancs
 ```{r}
-SWWine<-c(
-  sample(
-    1:max(which(WWine$quality<5)),round(0.8 * max(which(WWine$quality<5)), digits=0)
-  ),
-  sample(
-    max(which(WWine$quality<5))+1:dim(WWine)[1], round(0.8*length(which(WWine$quality>=5)), digits = 0)
-  )
-)
-fit<-rpart(WWine$quality~ ., data = WWine, subset = SWWine)
+SWWine<-c(sample(dim(WWine)[1], round(0.8 * dim(WWine)[1], digits = 0)))
+fit<-rpart(WWine$quality~ ., data = WWine, method = "class", minbucket=50)
+
+
+
 printcp(fit)
 plot(fit)
 text(fit)
-fit
-table(predict(fit, WWine[-SWWine,], type="vector"), WWine[-SWWine, "quality"])
+table(predict(fit, WWine[-SWWine,], type="class"), WWine[-SWWine, "quality"])
+```
+
+
+WWne 2
+
+```{r}
+errorRates = c()
+for(i in 1:10) {
+  SWWine<-c(
+    sample(which(WWine$quality == 3), round(0.8 * length(which(WWine$quality == 3)), digits = 0)),
+    sample(which(WWine$quality == 4), round(0.8 * length(which(WWine$quality == 4)), digits = 0)),
+    sample(which(WWine$quality == 5), round(0.8 * length(which(WWine$quality == 5)), digits = 0)),
+    sample(which(WWine$quality == 6), round(0.8 * length(which(WWine$quality == 6)), digits = 0)),
+    sample(which(WWine$quality == 7), round(0.8 * length(which(WWine$quality == 7)), digits = 0)),
+    sample(which(WWine$quality == 8), round(0.8 * length(which(WWine$quality == 8)), digits = 0)),
+    sample(which(WWine$quality == 9), round(0.6 * length(which(WWine$quality == 9)), digits = 0))
+  )
+  
+  fit<-rpart(WWine$quality~ ., data = WWine, subset = SWWine, method = "class", control = rpart.control(minsplit = 50))
+  pred<-table(predict(fit, WWine[-SWWine,], type="class"), WWine[-SWWine, "quality"])
+  errorRates = c(errorRates, 1-sum(diag(pred))/sum(pred))
+}
+
+mean(errorRates)
+
+plot(fit)
+text(fit)
+pfit<-prune(fit,cp=fit$cptable[which.min(fit$cptable[,"xerror"]), "CP"])
+plot(pfit)
+text(pfit)
+
+```
+
+
+WWine 3
+
+```{r}
+CWWine = WWine[which(WWine$quality >=5 & WWine$quality <= 7),]
+SCWWine = c(sample(dim(CWWine)[1], round(0.8* dim(CWWine)[1], digits = 0)))
+fit<-rpart(CWWine$quality~ ., data = CWWine, subset = SCWWine, method = "class")
+plot(fit)
+text(fit)
+printcp(fit)
+pred<-table(predict(fit, CWWine[-SCWWine,], type="class"), CWWine[-SCWWine, "quality"])
+1-sum(diag(pred))/sum(pred)
+pred
 ```
