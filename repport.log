@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.15)  15 FEB 2021 10:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.15)  15 FEB 2021 15:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,85 +609,85 @@ Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-6-2.pdf  used
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [4 <./repport_files/figure-latex/unnamed-chunk-5-1.pdf> <./repport_files/figur
 e-latex/unnamed-chunk-6-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-7-1.pdf, id=89, 469.755pt x 325.215pt
+<repport_files/figure-latex/unnamed-chunk-7-1.pdf, id=91, 469.755pt x 325.215pt
 >
 File: repport_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use repport_files/figure-latex/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-7-1.pdf  used
- on input line 236.
+ on input line 238.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-8-1.pdf, id=90, 469.755pt x 325.215pt
+<repport_files/figure-latex/unnamed-chunk-8-1.pdf, id=92, 469.755pt x 325.215pt
 >
 File: repport_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use repport_files/figure-latex/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-8-1.pdf  used
- on input line 248.
+ on input line 250.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [5 <./repport_files/figure-latex/unnamed-chunk-6-2.pdf> <./repport_files/figur
 e-latex/unnamed-chunk-7-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-9-1.pdf, id=105, 469.755pt x 325.215p
+<repport_files/figure-latex/unnamed-chunk-9-1.pdf, id=109, 469.755pt x 325.215p
 t>
 File: repport_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
 <use repport_files/figure-latex/unnamed-chunk-9-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-9-1.pdf  used
- on input line 259.
+ on input line 261.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-10-1.pdf, id=106, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-10-1.pdf, id=110, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-10-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-10-1.pdf  use
-d on input line 260.
+d on input line 263.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [6 <./repport_files/figure-latex/unnamed-chunk-8-1.pdf> <./repport_files/figur
 e-latex/unnamed-chunk-9-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-11-1.pdf, id=122, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-11-1.pdf, id=127, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-11-1.pdf  use
-d on input line 272.
+d on input line 274.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-12-1.pdf, id=123, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-12-1.pdf, id=128, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-12-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-12-1.pdf  use
-d on input line 281.
+d on input line 283.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-12-2.pdf, id=124, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-12-2.pdf, id=129, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-12-2.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-12-2.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-12-2.pdf  use
-d on input line 282.
+d on input line 284.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [7 <./repport_files/figure-latex/unnamed-chunk-10-1.pdf> <./repport_files/figu
 re-latex/unnamed-chunk-11-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-13-1.pdf, id=141, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-13-1.pdf, id=148, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-13-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-13-1.pdf  use
-d on input line 292.
+d on input line 294.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-13-2.pdf, id=142, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-13-2.pdf, id=149, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-13-2.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-13-2.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-13-2.pdf  use
-d on input line 293.
+d on input line 295.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
 
 [8 <./repport_files/figure-latex/unnamed-chunk-12-1.pdf> <./repport_files/figur
 e-latex/unnamed-chunk-12-2.pdf>]
-<repport_files/figure-latex/unnamed-chunk-14-1.pdf, id=160, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-14-1.pdf, id=167, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 
@@ -695,7 +695,7 @@ File: repport_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-14-1.pdf  use
 d on input line 303.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-14-2.pdf, id=161, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-14-2.pdf, id=168, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-14-2.pdf Graphic file (type pdf)
 
@@ -706,7 +706,7 @@ d on input line 304.
  [9 <./repport_files/figure-latex/unnamed-chunk-13-1.pdf> <./repport_files/figu
 re-latex/unnamed-chunk-13-2.pdf> <./repport_files/figure-latex/unnamed-chunk-14
 -1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-15-1.pdf, id=183, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-15-1.pdf, id=192, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
 
@@ -714,7 +714,7 @@ File: repport_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-15-1.pdf  use
 d on input line 316.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-15-2.pdf, id=184, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-15-2.pdf, id=193, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-15-2.pdf Graphic file (type pdf)
 
@@ -722,7 +722,7 @@ File: repport_files/figure-latex/unnamed-chunk-15-2.pdf Graphic file (type pdf)
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-15-2.pdf  use
 d on input line 317.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-15-3.pdf, id=185, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-15-3.pdf, id=194, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-15-3.pdf Graphic file (type pdf)
 
@@ -735,98 +735,98 @@ ure-latex/unnamed-chunk-15-1.pdf>]
 [11 <./repport_files/figure-latex/unnamed-chunk-15-2.pdf> <./repport_files/figu
 re-latex/unnamed-chunk-15-3.pdf>]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-37.
+35.
 
 (/usr/share/texlive/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<repport_files/figure-latex/unnamed-chunk-17-1.pdf, id=219, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-17-1.pdf, id=228, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-17-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-17-1.pdf  use
-d on input line 345.
+d on input line 343.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-18-1.pdf, id=220, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-18-1.pdf, id=229, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-18-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-18-1.pdf  use
-d on input line 356.
+d on input line 354.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [12 <./repport_files/figure-latex/unnamed-chunk-17-1.pdf> <./repport_files/fig
 ure-latex/unnamed-chunk-18-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-20-1.pdf, id=239, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-20-1.pdf, id=248, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-20-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-20-1.pdf  use
-d on input line 371.
+d on input line 369.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-22-1.pdf, id=240, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-22-1.pdf, id=249, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-22-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-22-1.pdf  use
-d on input line 389.
+d on input line 386.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-23-1.pdf, id=241, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-23-1.pdf, id=250, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-23-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-23-1.pdf  use
-d on input line 400.
+d on input line 397.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [13 <./repport_files/figure-latex/unnamed-chunk-20-1.pdf> <./repport_files/fig
 ure-latex/unnamed-chunk-22-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-25-1.pdf, id=257, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-25-1.pdf, id=266, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-25-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-25-1.pdf  use
-d on input line 415.
+d on input line 412.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-27-1.pdf, id=258, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-27-1.pdf, id=267, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-27-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-27-1.pdf  use
-d on input line 433.
+d on input line 430.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
  [14 <./repport_files/figure-latex/unnamed-chunk-23-1.pdf> <./repport_files/fig
 ure-latex/unnamed-chunk-25-1.pdf>]
-<repport_files/figure-latex/unnamed-chunk-28-1.pdf, id=274, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-28-1.pdf, id=283, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-28-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-28-1.pdf  use
-d on input line 444.
+d on input line 441.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
-<repport_files/figure-latex/unnamed-chunk-30-1.pdf, id=275, 469.755pt x 325.215
+<repport_files/figure-latex/unnamed-chunk-30-1.pdf, id=284, 469.755pt x 325.215
 pt>
 File: repport_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (type pdf)
 
 <use repport_files/figure-latex/unnamed-chunk-30-1.pdf>
 Package pdftex.def Info: repport_files/figure-latex/unnamed-chunk-30-1.pdf  use
-d on input line 459.
+d on input line 456.
 (pdftex.def)             Requested size: 284.5288pt x 196.98146pt.
 
 [15 <./repport_files/figure-latex/unnamed-chunk-27-1.pdf> <./repport_files/figu
 re-latex/unnamed-chunk-28-1.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 484.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 481.
  [16 <./repport_files/figure-latex/unnamed-chunk-30-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 484.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 481.
  (./repport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 484.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 484.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 481.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 481.
  ) 
 Here is how much of TeX's memory you used:
  13135 strings out of 482555
@@ -845,10 +845,10 @@ texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/lm/lmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm
 /lmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on repport.pdf (16 pages, 714065 bytes).
+Output written on repport.pdf (16 pages, 728243 bytes).
 PDF statistics:
- 359 PDF objects out of 1000 (max. 8388607)
- 271 compressed objects within 3 object streams
+ 368 PDF objects out of 1000 (max. 8388607)
+ 280 compressed objects within 3 object streams
  38 named destinations out of 1000 (max. 500000)
  10431 words of extra memory for PDF output out of 12000 (max. 10000000)
 

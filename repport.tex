@@ -225,12 +225,14 @@ blancs, on obtient le même nombre de classe recommandé.
 
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-6-1.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-6-2.pdf}
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-6-2.pdf}
 \end{center}
 
-Maintenant que nous connaissons le nombre de classes optimal, nous commençons par l'algorithme des kmeans. Nous appliquons l'algorithme comme précédemment, c'est-à-dire d'abord un ensemble de
-données composé à 50\% de vins blancs et 50\% de vins rouges, puis nous
-distinguons les vins rouges et les vins blancs.
+Maintenant que nous connaissons le nombre de classes optimal, nous
+commençons par l'algorithme des kmeans. Nous appliquons l'algorithme
+comme précédemment, c'est-à-dire d'abord un ensemble de données composé
+à 50\% de vins blancs et 50\% de vins rouges, puis nous distinguons les
+vins rouges et les vins blancs.
 
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-7-1.pdf}
@@ -257,10 +259,10 @@ blancs.
 
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-9-1.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-10-1.pdf} 
-\end{center}
 
-Nous constatons, comme pour les vins rouges, sur le graphique ci-dessus que
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-10-1.pdf}
+\end{center} Nous
+constatons, comme pour les vins rouges, sur le graphique ci-dessus que
 les classes, dans l'ensemble, sont compactes et très proches des unes et
 des autres. Cela nous informe qu'il y a un nombre important de vins de
 qualité moyenne (au sein des vins blancs) et qu'il y a quelques vins qui
@@ -279,49 +281,45 @@ Nous commençons par le jeu de données contenant 50\%de vins rouges et
 50\% de vins blancs.
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-12-1.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-12-2.pdf} 
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-12-2.pdf}
 \end{center}
 
-Nous pouvons voir sur la silhouette obtenue, qu'il y a quelques éléments qui
-ne sont pas satisfaits de leur classe. Mais si nous regardons de manière
-générale : nous avons obtenue une moyenne qui est proche de 0.5, ce qui
-veut dire que nous avons un découpage de qualité moyenne.
+Nous pouvons voir sur la silhouette obtenue, qu'il y a quelques éléments
+qui ne sont pas satisfaits de leur classe. Mais si nous regardons de
+manière générale : nous avons obtenue une moyenne qui est proche de 0.5,
+ce qui veut dire que nous avons un découpage de qualité moyenne.
 
 Maintenant regardons les vins rouges.
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-13-1.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-13-2.pdf} 
-\end{center}
-
-De manière générale, la qualité de notre découpage est moyen (d'après la
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-13-2.pdf}
+\end{center} De
+manière générale, la qualité de notre découpage est moyen (d'après la
 silhouette obtenue), car la qualité moyenne obtenue est proche de 0.5.
 Nous notons toutefois qu'il y a quelques éléments mal classés.
 
 Pour finir nous passons aux vins blancs
-
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-14-1.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-14-2.pdf}
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-14-2.pdf}
 \end{center}
 
 Pour les vins blancs, la qualité de notre découpage est légèrement moins
-satisfaisante. En effet, la qualité moyenne est plus proches
-de 0.4 que de 0.5. Cela peut s'expliquer par la répartition des notes
-pour les vins blancs que nous avons observé précédemment.
+satisfaisante. En effet, la qualité moyenne est plus proches de 0.4 que
+de 0.5. Cela peut s'expliquer par la répartition des notes pour les vins
+blancs que nous avons observé précédemment.
 
 Maintenant que nous avons étudié les silhouettes, nous allons étudier
 les dendrogrammes des trois jeux de données.
 
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-15-1.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-15-2.pdf}
-	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-15-3.pdf} 
-\end{center}
-
-Avec les trois dendrogrammes obtenus, nous constatons à chaque fois qu'il y a
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-15-2.pdf}
+\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-15-3.pdf} 
+\end{center}Avec
+les trois dendrogrammes obtenus, nous constatons à chaque fois qu'il y a
 trois classes possibles. Ce qui confirme les résultats de la méthode du
 coude.
-
 \newpage
 \hypertarget{classification-supervisuxe9e}{%
 \section{4 Classification
@@ -335,7 +333,7 @@ données des vins rouges et blancs.
 Jeu de données contenant 50\% de vins rouges et 50\% de vins blancs :
 
 \begin{verbatim}
-## [1] 0.47125
+## [1] 0.46825
 \end{verbatim}
 
 Avec 10 modèles différents nous obtenons un taux d'erreur moyen de 46\%,
@@ -360,7 +358,7 @@ données, mais cette nous garderons uniquement les vins de qualité
 moyenne (note entre 5 et 6).
 
 \begin{verbatim}
-## [1] 0.3229299
+## [1] 0.3095238
 \end{verbatim}
 
 En considérant, uniquement les vins de qualité moyenne nous avons un
@@ -369,9 +367,8 @@ obtenons donc le modèle suivant :
 
 \begin{center}
 	\includegraphics[width=10cm]{repport_files/figure-latex/unnamed-chunk-20-1.pdf}
-\end{center}
-
-Avec ce modèle nous pouvons voir que, de façon général, le paramètre le plus
+\end{center} Avec
+ce modèle nous pouvons voir que, de façon général, le paramètre le plus
 important pour déterminer la qualité du vin est sa teneur en alcool. Le
 second paramètre est l'acidité volatile.
 
@@ -379,7 +376,7 @@ Maintenant voyons qu'est-ce qui fait un bon vin rouge. Pour cela, nous
 allons procéder de la même manière que précédemment.
 
 \begin{verbatim}
-## [1] 0.4227414
+## [1] 0.44081
 \end{verbatim}
 
 Avec 10 modèles différents nous obtenons un taux d'erreur moyen de 43\%,
@@ -404,7 +401,7 @@ données, mais cette nous garderons uniquement les vins de qualité
 moyenne (note entre 5 et 6).
 
 \begin{verbatim}
-## [1] 0.3083333
+## [1] 0.2939394
 \end{verbatim}
 
 En considérant, uniquement les vins de qualité moyenne nous avons un
@@ -423,7 +420,7 @@ second paramètre ne fait qu'affiner la prédiction.
 Passons maintenant au cas des vins blancs.
 
 \begin{verbatim}
-## [1] 0.4733945
+## [1] 0.4818552
 \end{verbatim}
 
 Avec 10 modèles différents nous obtenons un taux d'erreur moyen de 47\%,
@@ -448,7 +445,7 @@ données, mais cette nous garderons uniquement les vins de qualité
 moyenne (note entre 5 et 6).
 
 \begin{verbatim}
-## [1] 0.30342
+## [1] 0.3025992
 \end{verbatim}
 
 En considérant, uniquement les vins de qualité moyenne nous avons un
