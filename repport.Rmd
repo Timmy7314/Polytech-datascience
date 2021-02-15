@@ -2,17 +2,19 @@
 title: "Wine Quality"
 author: "Alexandre SALMON, Thomas FRION"
 date: "13/01/2021"
-output: pdf_document
+output:
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F)
 library("ggplot2")
 library("reshape2")
 library("GGally")
 library("rpart")
-library("randomForest")
-library("plotly")
+library("cluster")
+library("fpc")
+library("plyr")
 ```
 
 # 1 Objectif de l'étude
@@ -104,76 +106,264 @@ plot(AWine[1:100,c(1,2,3,6,7,8,9)])
 Sur le diagramme ci-dessus, nous pouvons voir qu'il existe un lien entre le pH du vin et son acidité fixe. Ce lien s'explique par le fait que la mesure du pH permet de mesurer l'acidité ou la basicité d'une solution. 
 Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volatide, et entre le pH et la teneur en acide citrique. 
 
-```{r}
+# 3 Classification Non Supervisée
 
+On cherche à determiner le nombre optimal de cluster pour notre jeu de données. Pour cela, on applique la fonction coude avec 50% de vin blanc et 50% de vin rouge : 
+
+```{r}
 arr = c()
-for (i in 1:15) {
-  res <- kmeans(AWine,i)
+for (i in 1:10) {
+  res <- kmeans(AWine5050,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
+plot(arr)
+```
 
+On constate donc que le découpage 3 classes semble le plus pertinent. En appliquant la même méthode séparément aux vins rouges et aux vins blancs, on obtient le ême nombre de classe recommandé.
+
+```{r}
+arr = c()
+for (i in 1:10) {
+  res <- kmeans(RWine,i)
+  arr<-c(arr,res$tot.withinss/res$totss)
+}
 plot(arr)
 
-kmeans(AWine, 3)
+arr = c()
+for (i in 1:10) {
+  res <- kmeans(WWine,i)
+  arr<-c(arr,res$tot.withinss/res$totss)
+}
+plot(arr)
+```
+
+Maintenant que nous connaissons le nombre de classes optimal pour du clustering, nous commençons par l'algorithme des kmeans. Nous applicons l'algorithme comme précédemment, c'est-à-dire d'abord un ensemble de données composé à 50% de vins blancs et 50% de vins rouges, puis nous distingons les vins rouges et les vins blancs.
+
+
+```{r}
+AWine5050Clus <- kmeans(AWine5050, 3)
+plotcluster(AWine5050, AWine5050Clus$cluster)
+```
+
+Sur le résultat ci-dessus nous constatons que la séparation entre chaque classe est nette : il n'y a pas d'élément de la classe 3 dans la classe 1 ou 2. Ce qui confirme nos résultats précédents avec la méthode du coude.
+Nous pouvons dire également que la classe la plus à gauche correspond aux vins ayant une qualité médiocre, que la classe centrale correspond aux vins moyens et que la classe la plus à droite représente les meilleurs vins.
+
+```{r}
+RWineClus <- kmeans(RWine, 3)
+plotcluster(RWine, RWineClus$cluster)
+```
+
+Nous constatons que les classes, dans l'ensemble, sont compactes et très proches. Cela nous indique qu'il y a un nombre important de vins de qualité moyenne et qu'il y a quelques vins qui ont obtenu une notes très petite ou très grande.
+Cette analyse est confirmée par l'histogramme ci-dessous représentant la proportion de chaque note dans les vins blancs.
+
+```{r}
+dat<-count(RWine, "quality")
+dat$freq = round(dat$freq / dim(RWine)[1], digits = 4)
+graph<-barplot(dat$freq, main = "Répartition des notes des vins rouges", xlab = "Notes", ylim = c(0, 1.1*max(dat$freq)), ylab = "Proportion (%)")
+text(x = graph, y = dat$freq, label = dat$freq, pos = 3, cex = 0.8)
+axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
 ```
 
 
-## 4 Classification supervisée
-
-Tous les vins
 ```{r}
-SAWine5050<-c(
-  sample(
-    1:max(which(AWine5050$quality<5)), round(0.8 * max(which(AWine5050$quality<5)), digits=0)
-  ),
-  sample(
-    max(which(AWine5050$quality<5))+1:dim(AWine5050)[1], round(0.8*length(which(AWine5050$quality>=5)), digits = 0)
+WWineClus <- kmeans(WWine, 3)
+plotcluster(WWine, WWineClus$cluster)
+
+```
+Nous constatons, comme pour les vins rouges, sur le graphique ci-dessus que les classes, dans l'ensemble, sont compactes et très proches des unes et des autres. Cela nous informe qu'il y a un nombre important de vins de qualité moyenne (au sein des vins blancs) et qu'il y a quelques vins qui ont obtenu une notes très petite ou très grande.
+Cette analyse est confirmée par l'histogramme ci-dessous représentant la proportion de chaque note dans les vins blancs.
+
+```{r}
+dat<-count(WWine, "quality")
+dat$freq = round(dat$freq / dim(WWine)[1], digits = 4)
+graph<-barplot(dat$freq, main = "Répartition des notes des vins blancs", xlab = "Notes", ylim = c(0, 1.1*max(dat$freq)), ylab = "Proportion (%)")
+text(x = graph, y = dat$freq, label = dat$freq, pos = 3, cex = 0.8)
+axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
+```
+
+Maintenant que nous avons "clusterisé" nos données, nous allons cérifier la qualité des résultats obtenus grace aux silouhettes.
+
+Nous commençons par le jeu de données contenant 50%de vins rouges et 50% de vins blancs.
+```{r}
+AWine5050Sample<-AWine5050[sample(nrow(AWine5050), 200), ]
+AWine5050Clus <- pam(AWine5050Sample, 3)
+plotcluster(AWine5050Sample, AWine5050Clus$cluster)
+sil<-silhouette(AWine5050Clus)
+plot(sil)
+```
+Nous pouvons voir sur la silouhette obtenue, qu'il y a quelques éléments qui ne sont pas satisfaits de leur classe. Mais si nous regardons de manière générale : nous avons obtenue une moyenne qui est proche de 0.5, ce qui veut dire que nous avons un découpage de qualité moyenne.
+
+Maintenant regardons les vins rouges.
+```{r}
+RWineSample<-RWine[sample(nrow(RWine), 200), ]
+RWineClus <- pam(RWineSample, 3)
+plotcluster(RWineSample, RWineClus$cluster)
+sil<-silhouette(RWineClus)
+plot(sil)
+```
+De manière générale, la qualité de notre découpage est moyenn (d'après la silouhette obtenue), car la qualité moyenne obtenue est proche de 0.5. Nous notons toutefois qu'il y a quelques éléments mal classés.
+
+Pour finir nous passons aux vins blancs
+```{r}
+WWineSample<-WWine[sample(nrow(WWine), 200), ]
+WWineClus <- pam(WWineSample, 3)
+plotcluster(WWineSample, WWineClus$cluster)
+sil<-silhouette(WWineClus)
+plot(sil)
+
+```
+
+Pour les vins blancs, la qualité de notre découpage est légèrement moins satVins rougesisfaisante. En effet, la qualité moyenne est plus proches de 0.4 que de 0.5. Cela peut s'expliquer par la répartition des notes pour les vins blancs que nous avons observé précédement.
+
+
+Maintenant que nous avons étudié les silouhettes, nous allons étudier les dendogrammes des trois jeux de données. 
+
+```{r}
+DA<-dist(WWine)
+resuhist<-hclust(DA,method="ward.D")
+plot(resuhist, hang = -1)
+
+DR<-dist(RWine)
+resuhist<-hclust(DR,method="ward.D")
+plot(resuhist, hang = -1)
+
+DW<-dist(AWine5050)
+resuhist<-hclust(DW,method="ward.D")
+plot(resuhist, hang = -1)
+```
+Avec les trois dendogrammes obtenus, nous constatons à chaque fois qu'il y a trois classes possibles. Ce qui confirme les résultats de la méthode du coude.
+
+# 4 Classification supervisée
+
+Comme pour les paries précédentes nous allons commencer par étudier le jeu de données contenant 50% de vins rouges et 50% de vins blancs, afin d'avoir une idée générale. Puis nous fairons l'analyse des jeux de données des vins rouges et blancs.
+
+Jeu de données contenant 50% de vins rouges et 50% de vins blancs : 
+```{r}
+errorRates = c()
+for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque modèle créé
+  SAWine5050<-c(
+    sample(which(AWine5050$quality == 3), round(0.8 * length(which(AWine5050$quality == 3)), digits = 0)),
+    sample(which(AWine5050$quality == 4), round(0.8 * length(which(AWine5050$quality == 4)), digits = 0)),
+    sample(which(AWine5050$quality == 5), round(0.8 * length(which(AWine5050$quality == 5)), digits = 0)),
+    sample(which(AWine5050$quality == 6), round(0.8 * length(which(AWine5050$quality == 6)), digits = 0)),
+    sample(which(AWine5050$quality == 7), round(0.8 * length(which(AWine5050$quality == 7)), digits = 0)),
+    sample(which(AWine5050$quality == 8), round(0.8 * length(which(AWine5050$quality == 8)), digits = 0)),
+    sample(which(AWine5050$quality == 9), round(0.6 * length(which(AWine5050$quality == 9)), digits = 0))
   )
-)
-fit<-rpart(AWine5050$quality~ ., data = AWine5050, subset = SAWine5050)
-plot(fit)
-text(fit)
-fit
-table(predict(fit, AWine5050[-SAWine5050,], type="vector"), AWine5050[-SAWine5050, "quality"])
+  
+  fit<-rpart(AWine5050$quality~ ., data = AWine5050, subset = SAWine5050, method = "class", control = rpart.control(minsplit = 50))
+  pred<-table(predict(fit, AWine5050[-SAWine5050,], type="class"), AWine5050[-SAWine5050, "quality"])
+  errorRates = c(errorRates, 1-sum(diag(pred))/sum(pred))
+}
 
+mean(errorRates)
 ```
+Avec 10 modèles différens nous obtenons un taux d'erreur moyen de 46%, et nous obtenons le modèle suivant.
 
-Vins rouges
 ```{r}
-SRWine<-c(
-  sample(
-    1:max(which(RWine$quality<5)), round(0.8 * max(which(RWine$quality<5)), digits=0)
-  ),
-  sample(
-    max(which(RWine$quality<5))+1:dim(RWine)[1], round(0.8*length(which(RWine$quality>=5)), digits = 0)
-  )
-)
-fit<-rpart(RWine$quality~ ., data = RWine, subset = SRWine)
 plot(fit)
 text(fit)
-fit
-table(predict(fit, RWine[-SRWine,], type="vector"), RWine[-SRWine, "quality"])
 ```
 
-Vins blancs
+Le taux d'erreur obtenue peut s'expliquer par la répartition des notes pour ce jeu de données (graphique ci-dessous). Nous avons constaté qu'il y a majoritairement des vins de qualité moyenne (note entre  5 et 6). Cela a pour conséquence qu'il n'y a pas assez de données pour les autres notes et ainsi l'entrainement du modèle se concentre uniquement sur les vins de qualité moyenne.
+
 ```{r}
-SWWine<-c(sample(dim(WWine)[1], round(0.8 * dim(WWine)[1], digits = 0)))
-fit<-rpart(WWine$quality~ ., data = WWine, method = "class", minbucket=50)
+dat<-count(AWine5050, "quality")
+dat$freq = round(dat$freq / dim(AWine5050)[1], digits = 4)
+graph<-barplot(dat$freq, main = "Répartition des notes (50% vins rouges, 50% vins blancs)", xlab = "Notes", ylim = c(0, 1.1*max(dat$freq)), ylab = "Proportion (%)")
+text(x = graph, y = dat$freq, label = dat$freq, pos = 3, cex = 0.8)
+axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
+```
+Maintenant, nous allons refaire la même opération sur le même jeu de données, mais cette nous garderons uniquement les vins de qualité moyenne  (note entre  5 et 6).
 
+```{r}
+AWine5050 = AWine5050[which(AWine5050$quality >=5 & AWine5050$quality <= 6),]
+errorRates = c()
+for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque modèle créé
+  SAWine5050<-c(sample(dim(AWine5050)[1], round(0.8* dim(AWine5050)[1], digits = 0)))
+  fit<-rpart(AWine5050$quality~ ., data = AWine5050, subset = SAWine5050, method = "class", control = rpart.control(minsplit = 50))
+  pred<-table(predict(fit, AWine5050[-SAWine5050,], type="class"), AWine5050[-SAWine5050, "quality"])
+  errorRates = c(errorRates, 1-sum(diag(pred))/sum(pred))
+}
 
-
-printcp(fit)
-plot(fit)
-text(fit)
-table(predict(fit, WWine[-SWWine,], type="class"), WWine[-SWWine, "quality"])
+mean(errorRates)
 ```
 
+En considérant, uniquement les vins de qualité moyenne nous avons un taux d'erreur moyen (pour 10 modèles différents) de 30%. Ainsi nous obtenons donc le modèle suivant : 
 
-WWne 2
+```{r}
+plot(fit)
+text(fit)
+```
+Avec ce modèle nou pouvons voir que, de façon général, le paramètre le plus important pour déterminer la qualité du vin est sa teneur en alcool. Le second paramètre est l'acidité volatile.
+
+Maintenant voyons qu'est-ce qui fait un bon vin rouge. Pour cela, nous allons procéder de la même manière que précédement.
 
 ```{r}
 errorRates = c()
-for(i in 1:10) {
+for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque modèle créé
+  SRWine<-c(
+    sample(which(RWine$quality == 3), round(0.8 * length(which(RWine$quality == 3)), digits = 0)),
+    sample(which(RWine$quality == 4), round(0.8 * length(which(RWine$quality == 4)), digits = 0)),
+    sample(which(RWine$quality == 5), round(0.8 * length(which(RWine$quality == 5)), digits = 0)),
+    sample(which(RWine$quality == 6), round(0.8 * length(which(RWine$quality == 6)), digits = 0)),
+    sample(which(RWine$quality == 7), round(0.8 * length(which(RWine$quality == 7)), digits = 0)),
+    sample(which(RWine$quality == 8), round(0.8 * length(which(RWine$quality == 8)), digits = 0)),
+    sample(which(RWine$quality == 9), round(0.6 * length(which(RWine$quality == 9)), digits = 0))
+  )
+  
+  fit<-rpart(RWine$quality~ ., data = RWine, subset = SRWine, method = "class", control = rpart.control(minsplit = 50))
+  pred<-table(predict(fit, RWine[-SRWine,], type="class"), RWine[-SRWine, "quality"])
+  errorRates = c(errorRates, 1-sum(diag(pred))/sum(pred))
+}
+
+mean(errorRates)
+```
+Avec 10 modèles différens nous obtenons un taux d'erreur moyen de 43%, et nous obtenons le modèle suivant.
+
+```{r}
+plot(fit)
+text(fit)
+```
+
+Le taux d'erreur obtenue peut s'expliquer par la répartition des notes pour ce jeu de données (graphique ci-dessous). Nous avons constaté qu'il y a majoritairement des vins de qualité moyenne (note entre  5 et 6). Cela a pour conséquence qu'il n'y a pas assez de données pour les autres notes et ainsi l'entrainement du modèle se concentre uniquement sur les vins de qualité moyenne.
+
+```{r}
+dat<-count(RWine, "quality")
+dat$freq = round(dat$freq / dim(RWine)[1], digits = 4)
+graph<-barplot(dat$freq, main = "Répartition des notes pour les vins rouges", xlab = "Notes", ylim = c(0, 1.1*max(dat$freq)), ylab = "Proportion (%)")
+text(x = graph, y = dat$freq, label = dat$freq, pos = 3, cex = 0.8)
+axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
+```
+Maintenant, nous allons refaire la même opération sur le même jeu de données, mais cette nous garderons uniquement les vins de qualité moyenne  (note entre  5 et 6).
+
+```{r}
+RWine = RWine[which(RWine$quality >=5 & RWine$quality <= 6),]
+errorRates = c()
+for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque modèle créé
+  SRWine<-c(sample(dim(RWine)[1], round(0.8* dim(RWine)[1], digits = 0)))
+  fit<-rpart(RWine$quality~ ., data = RWine, subset = SRWine, method = "class", control = rpart.control(minsplit = 50))
+  pred<-table(predict(fit, RWine[-SRWine,], type="class"), RWine[-SRWine, "quality"])
+  errorRates = c(errorRates, 1-sum(diag(pred))/sum(pred))
+}
+
+mean(errorRates)
+```
+
+En considérant, uniquement les vins de qualité moyenne nous avons un taux d'erreur moyen (pour 10 modèles différents) de 30%. Ainsi nous obtenons donc le modèle suivant : 
+
+```{r}
+plot(fit)
+text(fit)
+```
+
+Avec ce modèle nous pouvons noter que le critère principal pour un bon vin rouge c'est sa teneur en alcool. Le second paramètre (moins impactant que le premier) est la teneur de sulfates dans le vin. Ce second paramètre ne fait qu'affiner la prédiction. 
+
+Passons maintenant au cas des vins blancs.
+
+```{r}
+errorRates = c()
+for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque modèle créé
   SWWine<-c(
     sample(which(WWine$quality == 3), round(0.8 * length(which(WWine$quality == 3)), digits = 0)),
     sample(which(WWine$quality == 4), round(0.8 * length(which(WWine$quality == 4)), digits = 0)),
@@ -190,26 +380,49 @@ for(i in 1:10) {
 }
 
 mean(errorRates)
-
-plot(fit)
-text(fit)
-pfit<-prune(fit,cp=fit$cptable[which.min(fit$cptable[,"xerror"]), "CP"])
-plot(pfit)
-text(pfit)
-
 ```
-
-
-WWine 3
+Avec 10 modèles différens nous obtenons un taux d'erreur moyen de 47%, et nous obtenons le modèle suivant.
 
 ```{r}
-CWWine = WWine[which(WWine$quality >=5 & WWine$quality <= 7),]
-SCWWine = c(sample(dim(CWWine)[1], round(0.8* dim(CWWine)[1], digits = 0)))
-fit<-rpart(CWWine$quality~ ., data = CWWine, subset = SCWWine, method = "class")
 plot(fit)
 text(fit)
-printcp(fit)
-pred<-table(predict(fit, CWWine[-SCWWine,], type="class"), CWWine[-SCWWine, "quality"])
-1-sum(diag(pred))/sum(pred)
-pred
 ```
+
+Le taux d'erreur obtenue peut s'expliquer par la répartition des notes pour ce jeu de données (graphique ci-dessous). Nous avons constaté qu'il y a majoritairement des vins de qualité moyenne (note entre  5 et 6). Cela a pour conséquence qu'il n'y a pas assez de données pour les autres notes et ainsi l'entrainement du modèle se concentre uniquement sur les vins de qualité moyenne.
+
+```{r}
+dat<-count(WWine, "quality")
+dat$freq = round(dat$freq / dim(WWine)[1], digits = 4)
+graph<-barplot(dat$freq, main = "Répartition des notes pour les vins rouges", xlab = "Notes", ylim = c(0, 1.1*max(dat$freq)), ylab = "Proportion (%)")
+text(x = graph, y = dat$freq, label = dat$freq, pos = 3, cex = 0.8)
+axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
+```
+Maintenant, nous allons refaire la même opération sur le même jeu de données, mais cette nous garderons uniquement les vins de qualité moyenne  (note entre  5 et 6).
+
+```{r}
+WWine = WWine[which(WWine$quality >=5 & WWine$quality <= 6),]
+errorRates = c()
+for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque modèle créé
+  SWWine<-c(sample(dim(WWine)[1], round(0.8* dim(WWine)[1], digits = 0)))
+  fit<-rpart(WWine$quality~ ., data = WWine, subset = SWWine, method = "class", control = rpart.control(minsplit = 50))
+  pred<-table(predict(fit, WWine[-SWWine,], type="class"), WWine[-SWWine, "quality"])
+  errorRates = c(errorRates, 1-sum(diag(pred))/sum(pred))
+}
+
+mean(errorRates)
+```
+
+En considérant, uniquement les vins de qualité moyenne nous avons un taux d'erreur moyen (pour 10 modèles différents) de 30%. Ainsi nous obtenons donc le modèle suivant : 
+
+```{r}
+plot(fit)
+text(fit)
+```
+
+Avec le modèle obtenu, nous pouvons dire que ce qui fait un bon vin blanc c'est la teneur en alcool et l'acidité volatile.
+
+# 5 Conclusion
+
+Au cours de cette étude, nous avons travailler avec des données sur des vins de la région Vinho Verde, afin d'aider les viticulteurs à améliorer leurs vins. 
+Nous avons vu, lors de la phase "Classification non supervisée", que de manière générale: qu'il est possible de classifier les vins en trois classes : médiocre, moyen, bon. Nous avons également noté que la majorité des vins de la région Vinho Verde sont de qulaité moyenne et qu'il y a peu de vins médiocres et peu de bons vins. Ainsi, les vins peuvent être améliorés de manière significative. 
+Lors de la phase "Classification supervisée", nous avons montré que ce qui fait un bon vin est principalement la teneur en alcool de ce dernier. L'une des pistes d'amélioration que nous pouvons ainsi proposer aux viticulteurs, est d'allonger le temps de fermentation du vin. Une autre piste d'amélioration que nous pouvons donner (suite à cette étude), est qu'il pourrait être intéressant d'avoir une plus grande teneur d'acide volatile (ou acide gras).  
