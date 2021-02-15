@@ -117,7 +117,7 @@ for (i in 1:10) {
   res <- kmeans(AWine5050,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
-plot(arr)
+plot(arr, xlab="Nombre de classes", ylab="Qualité du clustering", main="Fonction du coude pour tout les vins")
 ```
 
 On constate donc que le découpage 3 classes semble le plus pertinent. En appliquant la même méthode séparément aux vins rouges et aux vins blancs, on obtient le même nombre de classe recommandé.
@@ -128,14 +128,14 @@ for (i in 1:10) {
   res <- kmeans(RWine,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
-plot(arr)
+plot(arr, xlab="Nombre de classes", ylab="Qualité du clustering", main="Fonction du coude pour les vins Rouges")
 
 arr = c()
 for (i in 1:10) {
   res <- kmeans(WWine,i)
   arr<-c(arr,res$tot.withinss/res$totss)
 }
-plot(arr)
+plot(arr, xlab="Nombre de classes", ylab="Qualité du clustering", main="Fonction du coude pour les vins Blancs")
 ```
 
 Maintenant que nous connaissons le nombre de classes optimal, nous commençons par l'algorithme des kmeans. Nous appliquons l'algorithme comme précédemment, c'est-à-dire d'abord un ensemble de données composé à 50% de vins blancs et 50% de vins rouges, puis nous distinguons les vins rouges et les vins blancs.
@@ -143,7 +143,7 @@ Maintenant que nous connaissons le nombre de classes optimal, nous commençons p
 
 ```{r}
 AWine5050Clus <- kmeans(AWine5050, 3)
-plotcluster(AWine5050, AWine5050Clus$cluster)
+plotcluster(AWine5050, AWine5050Clus$cluster, main="Clustering en 3 classes pour tout les vins (kmeans)")
 ```
 
 Sur le résultat ci-dessus nous constatons que la séparation entre chaque classe est nette : il n'y a pas d'élément de la classe 3 dans la classe 1 ou 2. Ce qui confirme nos résultats précédents avec la méthode du coude.
@@ -151,7 +151,7 @@ Nous pouvons dire également que la classe la plus à gauche correspond aux vins
 
 ```{r}
 RWineClus <- kmeans(RWine, 3)
-plotcluster(RWine, RWineClus$cluster)
+plotcluster(RWine, RWineClus$cluster, main="Clustering en 3 classes pour les vins Rouges (kmeans)")
 ```
 
 Nous constatons que les classes, dans l'ensemble, sont compactes et très proches. Cela nous indique qu'il y a un nombre important de vins de qualité moyenne et qu'il y a quelques vins qui ont obtenu une notes très petite ou très grande.
@@ -168,7 +168,7 @@ axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
 
 ```{r}
 WWineClus <- kmeans(WWine, 3)
-plotcluster(WWine, WWineClus$cluster)
+plotcluster(WWine, WWineClus$cluster, main="Clustering en 3 classes pour les vins Blancs (kmeans)")
 
 ```
 Nous constatons, comme pour les vins rouges, sur le graphique ci-dessus que les classes, dans l'ensemble, sont compactes et très proches des unes et des autres. Cela nous informe qu'il y a un nombre important de vins de qualité moyenne (au sein des vins blancs) et qu'il y a quelques vins qui ont obtenu une notes très petite ou très grande.
@@ -188,7 +188,7 @@ Nous commençons par le jeu de données contenant 50%de vins rouges et 50% de vi
 ```{r}
 AWine5050Sample<-AWine5050[sample(nrow(AWine5050), 200), ]
 AWine5050Clus <- pam(AWine5050Sample, 3)
-plotcluster(AWine5050Sample, AWine5050Clus$cluster)
+plotcluster(AWine5050Sample, AWine5050Clus$cluster, main="Clustering en 3 classes pour tout les vins (pam)")
 sil<-silhouette(AWine5050Clus)
 plot(sil)
 ```
@@ -199,7 +199,7 @@ Maintenant regardons les vins rouges.
 ```{r}
 RWineSample<-RWine[sample(nrow(RWine), 200), ]
 RWineClus <- pam(RWineSample, 3)
-plotcluster(RWineSample, RWineClus$cluster)
+plotcluster(RWineSample, RWineClus$cluster, main="Clustering en 3 classes pour les vins Rouges (pam)")
 sil<-silhouette(RWineClus)
 plot(sil)
 ```
@@ -209,7 +209,7 @@ Pour finir nous passons aux vins blancs
 ```{r}
 WWineSample<-WWine[sample(nrow(WWine), 200), ]
 WWineClus <- pam(WWineSample, 3)
-plotcluster(WWineSample, WWineClus$cluster)
+plotcluster(WWineSample, WWineClus$cluster, main="Clustering en 3 classes pour les vins Blancs (pam)")
 sil<-silhouette(WWineClus)
 plot(sil)
 
@@ -222,16 +222,16 @@ Maintenant que nous avons étudié les silhouettes, nous allons étudier les den
 
 ```{r}
 DA<-dist(WWine)
-resuhist<-hclust(DA,method="ward.D")
-plot(resuhist, hang = -1)
+resuhist<-hclust(DA,method="ward.D2")
+plot(resuhist, hang = -1, main="Clustering avec hclust pour tout les vins")
 
 DR<-dist(RWine)
-resuhist<-hclust(DR,method="ward.D")
-plot(resuhist, hang = -1)
+resuhist<-hclust(DR,method="ward.D2")
+plot(resuhist, hang = -1, main="Clustering avec hclust pour les vins Rouges")
 
 DW<-dist(AWine5050)
-resuhist<-hclust(DW,method="ward.D")
-plot(resuhist, hang = -1)
+resuhist<-hclust(DW,method="ward.D2")
+plot(resuhist, hang = -1, main="Clustering avec hclust pour les vins Blancs")
 ```
 Avec les trois dendrogrammes obtenus, nous constatons à chaque fois qu'il y a trois classes possibles. Ce qui confirme les résultats de la méthode du coude.
 
