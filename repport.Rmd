@@ -3,7 +3,8 @@ title: "Wine Quality"
 author: "Alexandre SALMON, Thomas FRION"
 date: "13/01/2021"
 output:
-  pdf_document: default
+  pdf_document: 
+    keep_tex: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -22,7 +23,7 @@ library("plyr")
 Notre étude va porter sur la qualité des vins portugais, de la région Vinho Verde. Nos objectifs via cette étude sont : 
 
 * Déterminer un modèle de prédiction de la qualité d'un vin rouge et d'un vin blanc. Ainsi, connaitre le critère physionomique le plus important dans la détermination de la qualité pour chaque type de vin.
-* Comparer les deux modèles (blanc et rouge) pour savoir si ce qui vait un bon vin blanc, fait un bon vin rouge
+* Comparer les deux modèles (blanc et rouge) pour savoir si ce qui fait un bon vin blanc, fait un bon vin rouge
 
 Les conclusions de cette étude pourront permettre aux vignerons d'améliorer la qualité de leurs vins.
 
@@ -45,7 +46,7 @@ Les onze critères physionomiques sont les suivantes :
 10. Sulfates (teneur du fongicide)
 11. Alcool
 
-La variable de sortie correspond à la médianne des notes données par des experts (au minimun trois notes). Si la variable vaut 0 sela signifie que le vin est de très mauvaise qualité. Si la variable vaut 10 alors le vin est de bonne qualité.
+La variable de sortie correspond à la médiane des notes données par des experts (au minimum trois notes). Si la variable vaut 0 cela signifie que le vin est de très mauvaise qualité. Si la variable vaut 10 alors le vin est de bonne qualité.
 
 Nous avons 1599 vins rouges et 4898 vins blancs.
 
@@ -69,7 +70,7 @@ ggcorr(AWine5050[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
 
 ```
 
-Nous pouvons voir que le lien de précédement annoncé : le lien entre le $SO_2$ libre et le $SO_2$ total. Mais nous constatons également que, dans l'ensemble, il la variable de densité et d'alcool sont liées. Les variables de sucre résiduel et $SO_2$ libre sont également liées. 
+Nous pouvons voir que le lien de précédemment annoncé : le lien entre le $SO_2$ libre et le $SO_2$ total. Mais nous constatons également que, dans l'ensemble, il la variable de densité et d'alcool sont liées. Les variables de sucre résiduel et $SO_2$ libre sont également liées. 
 
 Ensuite nous avons réalisé le calcul de corrélation uniquement sur les vins rouges, afin de voir s'il y a des liens entre les variables qui seraient spécifiques aux vins rouges.
 
@@ -94,7 +95,7 @@ ggcorr(WWine[, -1], geom = "blank", label = TRUE, hjust = 0.75) +
 
 Nous pouvons voir avec ces résultats, nous pouvons voir que la variable de la densité du vin est liée aux variables de sucre résiduel et de $SO_2$ total. 
 
-Nous pouvons observer dans les résultats ci-desssus, qu'il y a des corrélations positives et négatives. Par exemple, la densité et l'alcool ont une corrélation négative : cela signifie que plus il y a d'alcool moins le vin est dense. À l'inverse, le $SO_2$ libre et le $SO_2$ total ont une corrélation positive. Ce qui signifie que plus il y a de $SO_2$ libre plus la teneur totale de $SO_2$ sera importante.
+Nous pouvons observer dans les résultats ci-dessus, qu'il y a des corrélations positives et négatives. Par exemple, la densité et l'alcool ont une corrélation négative : cela signifie que plus il y a d'alcool moins le vin est dense. À l'inverse, le $SO_2$ libre et le $SO_2$ total ont une corrélation positive. Ce qui signifie que plus il y a de $SO_2$ libre plus la teneur totale de $SO_2$ sera importante.
 
 Nous avons choisis de faire le calcul des corrélations afin d'avoir une vision d'ensemble des liens entre les variables. Ainsi nous pouvons faire un plot plus lisible des données pour mieux apprécier les liens.
 Ainsi nous avons pu établir le diagramme suivant :
@@ -104,11 +105,11 @@ plot(AWine[1:100,c(1,2,3,6,7,8,9)])
 ```
 
 Sur le diagramme ci-dessus, nous pouvons voir qu'il existe un lien entre le pH du vin et son acidité fixe. Ce lien s'explique par le fait que la mesure du pH permet de mesurer l'acidité ou la basicité d'une solution. 
-Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volatide, et entre le pH et la teneur en acide citrique. 
+Nous pouvons constater qu'il y a un lien entre le pH et la teneur en acide volatile, et entre le pH et la teneur en acide citrique. 
 
 # 3 Classification Non Supervisée
 
-On cherche à determiner le nombre optimal de cluster pour notre jeu de données. Pour cela, on applique la fonction coude avec 50% de vin blanc et 50% de vin rouge : 
+On cherche à déterminer le nombre optimal de cluster pour notre jeu de données. Pour cela, on applique la fonction coude avec 50% de vin blanc et 50% de vin rouge : 
 
 ```{r}
 arr = c()
@@ -119,7 +120,7 @@ for (i in 1:10) {
 plot(arr)
 ```
 
-On constate donc que le découpage 3 classes semble le plus pertinent. En appliquant la même méthode séparément aux vins rouges et aux vins blancs, on obtient le ême nombre de classe recommandé.
+On constate donc que le découpage 3 classes semble le plus pertinent. En appliquant la même méthode séparément aux vins rouges et aux vins blancs, on obtient le même nombre de classe recommandé.
 
 ```{r}
 arr = c()
@@ -137,7 +138,7 @@ for (i in 1:10) {
 plot(arr)
 ```
 
-Maintenant que nous connaissons le nombre de classes optimal pour du clustering, nous commençons par l'algorithme des kmeans. Nous applicons l'algorithme comme précédemment, c'est-à-dire d'abord un ensemble de données composé à 50% de vins blancs et 50% de vins rouges, puis nous distingons les vins rouges et les vins blancs.
+Maintenant que nous connaissons le nombre de classes optimal, nous commençons par l'algorithme des kmeans. Nous appliquons l'algorithme comme précédemment, c'est-à-dire d'abord un ensemble de données composé à 50% de vins blancs et 50% de vins rouges, puis nous distinguons les vins rouges et les vins blancs.
 
 
 ```{r}
@@ -181,7 +182,7 @@ text(x = graph, y = dat$freq, label = dat$freq, pos = 3, cex = 0.8)
 axis(1, at = graph, labels = dat$quality, tick = F, line = -0.5, cex.axis = 0.8)
 ```
 
-Maintenant que nous avons "clusterisé" nos données, nous allons cérifier la qualité des résultats obtenus grace aux silouhettes.
+Maintenant que nous avons "clusterisé" nos données, nous allons vérifier la qualité des résultats obtenus grâce aux silhouettes.
 
 Nous commençons par le jeu de données contenant 50%de vins rouges et 50% de vins blancs.
 ```{r}
@@ -191,7 +192,8 @@ plotcluster(AWine5050Sample, AWine5050Clus$cluster)
 sil<-silhouette(AWine5050Clus)
 plot(sil)
 ```
-Nous pouvons voir sur la silouhette obtenue, qu'il y a quelques éléments qui ne sont pas satisfaits de leur classe. Mais si nous regardons de manière générale : nous avons obtenue une moyenne qui est proche de 0.5, ce qui veut dire que nous avons un découpage de qualité moyenne.
+
+Nous pouvons voir sur la silhouette obtenue, qu'il y a quelques éléments qui ne sont pas satisfaits de leur classe. Mais si nous regardons de manière générale : nous avons obtenue une moyenne qui est proche de 0.5, ce qui veut dire que nous avons un découpage de qualité moyenne.
 
 Maintenant regardons les vins rouges.
 ```{r}
@@ -201,7 +203,7 @@ plotcluster(RWineSample, RWineClus$cluster)
 sil<-silhouette(RWineClus)
 plot(sil)
 ```
-De manière générale, la qualité de notre découpage est moyenn (d'après la silouhette obtenue), car la qualité moyenne obtenue est proche de 0.5. Nous notons toutefois qu'il y a quelques éléments mal classés.
+De manière générale, la qualité de notre découpage est moyen (d'après la silhouette obtenue), car la qualité moyenne obtenue est proche de 0.5. Nous notons toutefois qu'il y a quelques éléments mal classés.
 
 Pour finir nous passons aux vins blancs
 ```{r}
@@ -213,10 +215,10 @@ plot(sil)
 
 ```
 
-Pour les vins blancs, la qualité de notre découpage est légèrement moins satVins rougesisfaisante. En effet, la qualité moyenne est plus proches de 0.4 que de 0.5. Cela peut s'expliquer par la répartition des notes pour les vins blancs que nous avons observé précédement.
+Pour les vins blancs, la qualité de notre découpage est légèrement moins satisfaisante. En effet, la qualité moyenne est plus proches de 0.4 que de 0.5. Cela peut s'expliquer par la répartition des notes pour les vins blancs que nous avons observé précédemment.
 
 
-Maintenant que nous avons étudié les silouhettes, nous allons étudier les dendogrammes des trois jeux de données. 
+Maintenant que nous avons étudié les silhouettes, nous allons étudier les dendrogrammes des trois jeux de données. 
 
 ```{r}
 DA<-dist(WWine)
@@ -231,11 +233,11 @@ DW<-dist(AWine5050)
 resuhist<-hclust(DW,method="ward.D")
 plot(resuhist, hang = -1)
 ```
-Avec les trois dendogrammes obtenus, nous constatons à chaque fois qu'il y a trois classes possibles. Ce qui confirme les résultats de la méthode du coude.
+Avec les trois dendrogrammes obtenus, nous constatons à chaque fois qu'il y a trois classes possibles. Ce qui confirme les résultats de la méthode du coude.
 
 # 4 Classification supervisée
 
-Comme pour les paries précédentes nous allons commencer par étudier le jeu de données contenant 50% de vins rouges et 50% de vins blancs, afin d'avoir une idée générale. Puis nous fairons l'analyse des jeux de données des vins rouges et blancs.
+Comme pour les paries précédentes nous allons commencer par étudier le jeu de données contenant 50% de vins rouges et 50% de vins blancs, afin d'avoir une idée générale. Puis nous ferons l'analyse des jeux de données des vins rouges et blancs.
 
 Jeu de données contenant 50% de vins rouges et 50% de vins blancs : 
 ```{r}
@@ -258,7 +260,7 @@ for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque mod
 
 mean(errorRates)
 ```
-Avec 10 modèles différens nous obtenons un taux d'erreur moyen de 46%, et nous obtenons le modèle suivant.
+Avec 10 modèles différents nous obtenons un taux d'erreur moyen de 46%, et nous obtenons le modèle suivant.
 
 ```{r}
 plot(fit)
@@ -295,9 +297,9 @@ En considérant, uniquement les vins de qualité moyenne nous avons un taux d'er
 plot(fit)
 text(fit)
 ```
-Avec ce modèle nou pouvons voir que, de façon général, le paramètre le plus important pour déterminer la qualité du vin est sa teneur en alcool. Le second paramètre est l'acidité volatile.
+Avec ce modèle nous pouvons voir que, de façon général, le paramètre le plus important pour déterminer la qualité du vin est sa teneur en alcool. Le second paramètre est l'acidité volatile.
 
-Maintenant voyons qu'est-ce qui fait un bon vin rouge. Pour cela, nous allons procéder de la même manière que précédement.
+Maintenant voyons qu'est-ce qui fait un bon vin rouge. Pour cela, nous allons procéder de la même manière que précédemment.
 
 ```{r}
 errorRates = c()
@@ -319,7 +321,7 @@ for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque mod
 
 mean(errorRates)
 ```
-Avec 10 modèles différens nous obtenons un taux d'erreur moyen de 43%, et nous obtenons le modèle suivant.
+Avec 10 modèles différents nous obtenons un taux d'erreur moyen de 43%, et nous obtenons le modèle suivant.
 
 ```{r}
 plot(fit)
@@ -381,7 +383,7 @@ for(i in 1:10) { # Calcul de la moyenne des erreurs de prédiction de chaque mod
 
 mean(errorRates)
 ```
-Avec 10 modèles différens nous obtenons un taux d'erreur moyen de 47%, et nous obtenons le modèle suivant.
+Avec 10 modèles différents nous obtenons un taux d'erreur moyen de 47%, et nous obtenons le modèle suivant.
 
 ```{r}
 plot(fit)
@@ -424,5 +426,5 @@ Avec le modèle obtenu, nous pouvons dire que ce qui fait un bon vin blanc c'est
 # 5 Conclusion
 
 Au cours de cette étude, nous avons travailler avec des données sur des vins de la région Vinho Verde, afin d'aider les viticulteurs à améliorer leurs vins. 
-Nous avons vu, lors de la phase "Classification non supervisée", que de manière générale: qu'il est possible de classifier les vins en trois classes : médiocre, moyen, bon. Nous avons également noté que la majorité des vins de la région Vinho Verde sont de qulaité moyenne et qu'il y a peu de vins médiocres et peu de bons vins. Ainsi, les vins peuvent être améliorés de manière significative. 
+Nous avons vu, lors de la phase "Classification non supervisée", que de manière générale: qu'il est possible de classifier les vins en trois classes : médiocre, moyen, bon. Nous avons également noté que la majorité des vins de la région Vinho Verde sont de qualité moyenne et qu'il y a peu de vins médiocres et peu de bons vins. Ainsi, les vins peuvent être améliorés de manière significative. 
 Lors de la phase "Classification supervisée", nous avons montré que ce qui fait un bon vin est principalement la teneur en alcool de ce dernier. L'une des pistes d'amélioration que nous pouvons ainsi proposer aux viticulteurs, est d'allonger le temps de fermentation du vin. Une autre piste d'amélioration que nous pouvons donner (suite à cette étude), est qu'il pourrait être intéressant d'avoir une plus grande teneur d'acide volatile (ou acide gras).  
